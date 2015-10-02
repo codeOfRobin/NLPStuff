@@ -15,7 +15,7 @@ with open('./WSJ/wsj.flat') as f:
         tokens = pipeline(line)
         headAndToken = [(token.idx,token.head.idx) for ind, token in enumerate(tokens)]
         totalScore = sum([abs(tokenIndex-tokenHeadIndex) for tokenIndex,tokenHeadIndex in headAndToken])
-        totalScore = totalScore/len(tokens)
+        totalScore = totalScore/len(line)
         length_normalized_complexity.append(totalScore)
 
 #plt.plot(range(len(length_normalized_complexity)),length_normalized_complexity)
