@@ -23,9 +23,9 @@ n, bins, patches = plt.hist(length_normalized_complexity,bins=200, normed=1, fac
 (mu, sigma) = norm.fit(length_normalized_complexity)
 y = mlab.normpdf( bins, mu, sigma)
 l = plt.plot(bins, y, 'r--', linewidth=2)
-plt.xlabel('Smarts')
-plt.ylabel('Probability')
-plt.title(r'$\mathrm{Histogram\ of\ IQ:}\ \mu=%.3f,\ \sigma=%.3f$' %(mu, sigma))
+plt.xlabel('Length between Dependancies')
+plt.ylabel('number of sentences in corpus')
+plt.title(r'$\mathrm{Histogram\ of\ Normalised Dependancy Lengths:}\ \mu=%.3f,\ \sigma=%.3f$' %(mu, sigma))
 plt.grid(True)
 plt.show()
 
