@@ -5,11 +5,14 @@ from spacy.en import English
 import sys
 import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
+from readability.readability import Readability
+
 
 # parser = English()
 pipeline = English()
 
 length_normalized_complexity = []
+FKGradeLevel = []
 with open('./WSJ/wsj.flat') as f:
     for line in f:
         tokens = pipeline(line)
@@ -17,9 +20,14 @@ with open('./WSJ/wsj.flat') as f:
         totalScore = sum([abs(tokenIndex-tokenHeadIndex) for tokenIndex,tokenHeadIndex in headAndToken])
         totalScore = totalScore/len(line)
         length_normalized_complexity.append(totalScore)
+        FKGradeLevel.append(Readability(line).FleschReadingEase())
 
+
+highestComplexity = max(length_normalized_complexity)
+length_normalized_complexity = [complexity*100/highestComplexity for complexity in length_normalized_complexity]
 #plt.plot(range(len(length_normalized_complexity)),length_normalized_complexity)
-n, bins, patches = plt.hist(length_normalized_complexity,bins=200, normed=1, facecolor='green', alpha=0.75)
+n, bins, patches = plt.hist(length_normalized_complexity,bins=200, normed=1, facecolor='green', alpha=0.50)
+n2,bins2, patches2 = plt.hist(FKGradeLevel,bins=200, normed=1, facecolor='red', alpha=0.50)
 (mu, sigma) = norm.fit(length_normalized_complexity)
 y = mlab.normpdf( bins, mu, sigma)
 l = plt.plot(bins, y, 'r--', linewidth=2)
